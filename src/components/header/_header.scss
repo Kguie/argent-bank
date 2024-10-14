@@ -1,0 +1,44 @@
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__link {
+        font-weight: bold;
+        color: #2c3e50;
+        cursor: pointer;
+
+        .router-link-exact-active {
+            color: #42b983;
+        }
+
+        &__item {
+            text-decoration: none;
+            margin-right: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+
+            &:hover>span {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            max-width: 100%;
+            width: 200px;
+        }
+    }
+}

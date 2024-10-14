@@ -1,0 +1,19 @@
+//Utils
+@import './utils/mixins';
+@import './utils/variables';
+@import './utils/animations';
+
+//Base
+@import './base/global';
+
+//Components
+@import '../../../components/footer/footer';
+@import '../../../components/header/header';
+
+
+// //Pages
+// @import '../../../pages/home/home';
+
+//loader
+@import '../../skeleton/skeleton';
+@import '../../loader/loader';

@@ -1,0 +1,30 @@
+//Media queries
+//taille écran tablette minimum
+@mixin tablet-only {
+    @media screen and (min-width: map-get($breakpoints, tablet)) {
+        @content;
+    }
+}
+
+//taille écran desk
+@mixin desktop-only {
+    @media screen and (min-width: map-get($breakpoints, desktop)) {
+        @content;
+    }
+}
+
+
+//Box-sizing
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model; // Safari <= 5
+    -moz-box-sizing: $box-model; // Firefox <= 19
+    box-sizing: $box-model;
+}
+
+
+//Centre un bloc sans toucher aux margin top et bottom
+@mixin center-box {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
