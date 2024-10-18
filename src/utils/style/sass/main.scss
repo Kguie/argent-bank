@@ -9,10 +9,11 @@
 //Components
 @import '../../../components/footer/footer';
 @import '../../../components/header/header';
-
+@import '../../../components/home/homeBanner/home-banner';
+@import '../../../components/home/featureItem/feature-item';
 
 // //Pages
-// @import '../../../pages/home/home';
+@import '../../../pages/home/home';
 
 //loader
 @import '../../skeleton/skeleton';

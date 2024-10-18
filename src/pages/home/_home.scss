@@ -1,0 +1,11 @@
+.home {
+    &__features {
+        display: flex;
+        flex-direction: column;
+
+        @include desktop-only {
+            flex-direction: row;
+        }
+
+    }
+}
