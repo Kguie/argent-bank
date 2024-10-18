@@ -7,13 +7,19 @@
 @import './base/global';
 
 //Components
+@import '../../../components/button/button';
 @import '../../../components/footer/footer';
 @import '../../../components/header/header';
 @import '../../../components/home/homeBanner/home-banner';
 @import '../../../components/home/featureItem/feature-item';
+@import '../../../components/signInForm/sign-in-form';
+@import '../../../components/user/userHeader/user-header';
+@import '../../../components/user/userAccount/user-account';
 
 // //Pages
 @import '../../../pages/home/home';
+@import '../../../pages/signIn/sign-in';
+@import '../../../pages/user/user';
 
 //loader
 @import '../../skeleton/skeleton';

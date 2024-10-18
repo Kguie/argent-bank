@@ -1,10 +1,10 @@
-import React from "react";
+import { memo } from "react";
 
 import HomeBanner from "../../components/home/homeBanner/HomeBanner";
 import FeatureItem from "../../components/home/featureItem/FeatureItem";
 
 export default function Home() {
-  const FeaturesRow = React.memo(() => (
+  const FeaturesRow = memo(() => (
     <>
       {FEATURES.map((item) => (
         <FeatureItem

@@ -10,7 +10,7 @@ export default function FeatureItem({
   return (
     <div className="feature-item">
       <img
-        src={require(`../../../assets/icons/${icon}.png`)}
+        src={require(`../../../assets/icons/${icon}.png`) || ""}
         alt={formatAltForIcon(icon)}
         className="feature-item__icon"
       />

@@ -22,6 +22,6 @@ export default function AppRouter() {
 
 const routes = [
   { path: "/", element: <Home /> },
-  { path: "/signIn", element: <SignIn /> },
+  { path: "/sign-in", element: <SignIn /> },
   { path: "/user/:id", element: <User /> },
 ];

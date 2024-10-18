@@ -1,0 +1,32 @@
+.sign-in-form {
+    &__input-wrapper {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        margin-bottom: 1rem;
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+    }
+
+    &__input-remember {
+        display: flex;
+
+        label {
+            margin-left: 0.25rem;
+        }
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+    }
+}

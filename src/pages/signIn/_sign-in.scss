@@ -1,0 +1,20 @@
+.sign-in {
+    background-color: $clr-bgDark;
+
+    h2 {
+        font-size: 2em;
+    }
+
+    &__content {
+        box-sizing: border-box;
+        background-color: white;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 3rem;
+        padding: 2rem;
+
+        &__icon {
+            font-size: 5rem;
+        }
+    }
+}
