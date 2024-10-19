@@ -1,6 +1,6 @@
 import Button from "../../button/Button";
 
-export default function UserHeader() {
+export default function UserHeader(): React.ReactElement {
   return (
     <div className="user-header">
       <h2>

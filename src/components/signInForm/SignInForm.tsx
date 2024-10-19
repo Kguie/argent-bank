@@ -3,10 +3,10 @@ import { FormEvent } from "react";
 import Button from "../button/Button";
 import { useNavigate } from "react-router-dom";
 
-export default function SignInForm() {
+export default function SignInForm(): React.ReactElement {
   const navigate = useNavigate();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const username = formData.get("username") as string;

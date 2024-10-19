@@ -1,6 +1,6 @@
 import SignInForm from "../../components/signInForm/SignInForm";
 
-export default function SignIn() {
+export default function SignIn(): React.ReactElement {
   return (
     <main className="sign-in">
       <section className="sign-in__content">

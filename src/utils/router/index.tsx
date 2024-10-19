@@ -5,6 +5,7 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import SignIn from "../../pages/signIn/SignIn";
 import User from "../../pages/user/User";
+import Error from "../../pages/error/Error";
 
 export default function AppRouter() {
   return (
@@ -22,6 +23,7 @@ export default function AppRouter() {
 
 const routes = [
   { path: "/", element: <Home /> },
-  { path: "/sign-in", element: <SignIn /> },
-  { path: "/user/:id", element: <User /> },
+  { path: "/login", element: <SignIn /> },
+  { path: "/profile/:id", element: <User /> },
+  { path: "*", element: <Error /> },
 ];

@@ -5,13 +5,16 @@ import reportWebVitals from "./reportWebVitals";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./utils/style/sass/main.scss";
 import AppRouter from "./utils/router";
+import StoreProvider from "./utils/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppRouter />
+    <StoreProvider>
+      <AppRouter />
+    </StoreProvider>
   </React.StrictMode>
 );
 

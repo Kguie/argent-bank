@@ -1,10 +1,12 @@
-import { memo } from "react";
+import { memo, MemoExoticComponent } from "react";
 
 import UserHeader from "../../components/user/userHeader/UserHeader";
 import UserAccount from "../../components/user/userAccount/UserAccount";
 
-export default function User() {
-  const AccountsArray = memo(() => (
+export default function User(): React.ReactElement {
+  const AccountsArray: MemoExoticComponent<
+    () => React.ReactElement<any, any> | null
+  > = memo(() => (
     <>
       {MOCKED_ACCOUNTS.map(({ title, description, amount }) => (
         <UserAccount

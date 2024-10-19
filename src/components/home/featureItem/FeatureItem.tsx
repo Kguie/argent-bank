@@ -6,7 +6,7 @@ export default function FeatureItem({
   icon,
   title,
   content,
-}: FeatureItemProps) {
+}: FeatureItemProps): React.ReactElement {
   return (
     <div className="feature-item">
       <img

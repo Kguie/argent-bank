@@ -10,7 +10,7 @@ export default function UserAccount({
   title,
   amount,
   description,
-}: UserAccountProps) {
+}: UserAccountProps): React.ReactElement {
   return (
     <section className="account">
       <div className="account__content-wrapper">

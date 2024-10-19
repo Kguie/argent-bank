@@ -1,4 +1,12 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import {
+  selectUserInfos,
+  useAppDispatch,
+  useAppSelector,
+} from "../../utils/hooks/selectors";
+import { logOut } from "../../features/authToken";
+import { resetUserInfos } from "../../features/userInfos";
 
 type HeaderRightNavItemProps = {
   label: string;
@@ -7,11 +15,14 @@ type HeaderRightNavItemProps = {
 };
 
 export default function HeaderRightNav(): React.ReactElement {
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const userInfos = useAppSelector(selectUserInfos);
 
   function handleSignOut(): void {
-    console.log("disconnect");
+    dispatch(logOut());
+    dispatch(resetUserInfos());
     navigate("/");
   }
 
@@ -29,12 +40,12 @@ export default function HeaderRightNav(): React.ReactElement {
     </div>
   );
 
-  if (pathname.toLowerCase().includes("user")) {
+  if (userInfos) {
     return (
       <div className="header-nav__wrapper">
         <HeaderRightNavItem
-          label={"Tony"}
-          onCLick={() => navigate("/user")}
+          label={userInfos.firstName}
+          onCLick={() => navigate("/profile/" + userInfos.id)}
           iconClass={"fa fa-user-circle"}
         />
         <HeaderRightNavItem
@@ -50,7 +61,7 @@ export default function HeaderRightNav(): React.ReactElement {
     <div>
       <HeaderRightNavItem
         label={"Sign In"}
-        onCLick={() => navigate("/sign-in")}
+        onCLick={() => navigate("/login")}
         iconClass={"fa fa-user-circle"}
       />
     </div>

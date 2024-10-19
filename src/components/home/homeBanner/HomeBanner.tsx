@@ -1,4 +1,4 @@
-export default function HomeBanner() {
+export default function HomeBanner(): React.ReactElement {
   return (
     <section className="home-banner">
       <div className="home-banner__wrapper">
