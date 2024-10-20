@@ -1,22 +1,46 @@
-import { FormEvent } from "react";
-
-import Button from "../button/Button";
+import { FormEvent, memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Button from "../button/Button";
+import { useLogIn } from "../../utils/hooks/api/user";
+import { selectUserInfos, useAppSelector } from "../../utils/hooks/selectors";
+
 export default function SignInForm(): React.ReactElement {
+  const { handleLogIn, error } = useLogIn();
+  const userInfos = useAppSelector(selectUserInfos);
   const navigate = useNavigate();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(event.currentTarget);
-    const username = formData.get("username") as string;
+    const email = formData.get("username") as string;
     const password = formData.get("password") as string;
     const rememberMe = formData.get("remember-me") === "on";
 
-    const payload = { username, password, rememberMe };
-    console.log(payload);
-    navigate("/user/" + username);
+    const payload = { email, password, rememberMe };
+    const res = await handleLogIn(payload);
+
+    if (!res?.token) setIsLoading(false);
   }
+
+  const ErrorMessage = memo(() =>
+    error ? (
+      <p className="sign-in-form__error">Connection attempt failed</p>
+    ) : null
+  );
+
+  useEffect(() => {
+    if (userInfos) {
+      navigate("/profile/" + userInfos.id);
+      setIsLoading(false);
+    }
+  }, [navigate, userInfos]);
+
   return (
     <form className="sign-in-form" onSubmit={handleSubmit}>
       <div className="sign-in-form__input-wrapper">
@@ -31,7 +55,8 @@ export default function SignInForm(): React.ReactElement {
         <input type="checkbox" id="remember-me" name="remember-me" />
         <label htmlFor="remember-me">Remember me</label>
       </div>
-      <Button label="Sign in" type="submit" />
+      <Button isLoading={isLoading} label="Sign in" type="submit" />
+      <ErrorMessage />
     </form>
   );
 }

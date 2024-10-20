@@ -6,17 +6,20 @@ import Footer from "../../components/footer/Footer";
 import SignIn from "../../pages/signIn/SignIn";
 import User from "../../pages/user/User";
 import Error from "../../pages/error/Error";
+import UserInfosProvider from "../../components/userInfosProvider/UserInfosProvider";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        {routes.map(({ path, element }, index) => (
-          <Route key={index} path={path} element={element} />
-        ))}
-      </Routes>
-      <Footer />
+      <UserInfosProvider>
+        <Header />
+        <Routes>
+          {routes.map(({ path, element }, index) => (
+            <Route key={index} path={path} element={element} />
+          ))}
+        </Routes>
+        <Footer />
+      </UserInfosProvider>
     </BrowserRouter>
   );
 }

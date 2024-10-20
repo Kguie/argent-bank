@@ -7,10 +7,11 @@ import {
 } from "../../utils/hooks/selectors";
 import { logOut } from "../../features/authToken";
 import { resetUserInfos } from "../../features/userInfos";
+import { setLocalStorageAuthToken } from "../../utils/utils";
 
 type HeaderRightNavItemProps = {
   label: string;
-  onCLick: () => void;
+  onClick: () => void;
   iconClass: string;
 };
 
@@ -22,19 +23,20 @@ export default function HeaderRightNav(): React.ReactElement {
 
   function handleSignOut(): void {
     dispatch(logOut());
+    setLocalStorageAuthToken(null);
     dispatch(resetUserInfos());
     navigate("/");
   }
 
   const HeaderRightNavItem = ({
     label,
-    onCLick,
+    onClick,
     iconClass,
   }: HeaderRightNavItemProps): React.ReactElement => (
     <div
       data-testid="header-right-nav-item"
       className="header-nav__link__item header-nav__link"
-      onClick={onCLick}>
+      onClick={onClick}>
       <i data-testid="header-right-nav-item__icon" className={iconClass}></i>
       <span>{label}</span>
     </div>
@@ -45,12 +47,12 @@ export default function HeaderRightNav(): React.ReactElement {
       <div className="header-nav__wrapper">
         <HeaderRightNavItem
           label={userInfos.firstName}
-          onCLick={() => navigate("/profile/" + userInfos.id)}
+          onClick={() => navigate("/profile/" + userInfos.id)}
           iconClass={"fa fa-user-circle"}
         />
         <HeaderRightNavItem
           label={"Sign Out"}
-          onCLick={handleSignOut}
+          onClick={handleSignOut}
           iconClass={"fa fa-sign-out"}
         />
       </div>
@@ -61,7 +63,7 @@ export default function HeaderRightNav(): React.ReactElement {
     <div>
       <HeaderRightNavItem
         label={"Sign In"}
-        onCLick={() => navigate("/login")}
+        onClick={() => navigate("/login")}
         iconClass={"fa fa-user-circle"}
       />
     </div>

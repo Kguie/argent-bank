@@ -1,9 +1,15 @@
-import { memo, MemoExoticComponent } from "react";
+import { memo, MemoExoticComponent, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import UserHeader from "../../components/user/userHeader/UserHeader";
 import UserAccount from "../../components/user/userAccount/UserAccount";
+import { selectUserInfos, useAppSelector } from "../../utils/hooks/selectors";
 
 export default function User(): React.ReactElement {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const userInfos = useAppSelector(selectUserInfos);
+
   const AccountsArray: MemoExoticComponent<
     () => React.ReactElement<any, any> | null
   > = memo(() => (
@@ -18,6 +24,11 @@ export default function User(): React.ReactElement {
       ))}
     </>
   ));
+
+  useEffect(() => {
+    if (id && userInfos && id !== userInfos.id)
+      navigate("/profile/" + userInfos.id);
+  }, [id, navigate, userInfos]);
 
   return (
     <main className="user">

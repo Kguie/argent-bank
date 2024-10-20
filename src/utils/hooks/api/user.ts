@@ -1,4 +1,8 @@
 import { usePost, usePut } from ".";
+import { logIn } from "../../../features/authToken";
+import { setUserInfos } from "../../../features/userInfos";
+import { setLocalStorageAuthToken } from "../../utils";
+import { useAppDispatch } from "../selectors";
 
 type UserLoginDTO = {
   email: string;
@@ -32,13 +36,65 @@ type UserCreatedProps = UserProfileProps & {
   password: string;
 };
 
-export const useLogIn = () => usePost<UserLoginDTO, LoginProps>("/user/login");
-
 export const useSignUp = () =>
   usePost<UserSignUpDTO, UserCreatedProps>("/user/signup");
 
-export const useRetrieveProfile = () =>
-  usePost<void, UserProfileProps>("/user/profile");
+export function useLogIn() {
+  const { postData, isLoading, error } = usePost<UserLoginDTO, LoginProps>(
+    "/user/login"
+  );
+  const dispatch = useAppDispatch();
 
-export const useUpdateProfile = () =>
-  usePut<UserUpdateDTO, UserProfileProps>("/user/profile");
+  async function handleLogIn(
+    payload: UserLoginDTO & { rememberMe: boolean }
+  ): Promise<LoginProps | undefined> {
+    const res = await postData({
+      password: payload.password,
+      email: payload.email,
+    });
+    if (res?.token) {
+      dispatch(logIn(res.token));
+      setLocalStorageAuthToken(payload.rememberMe ? res.token : null);
+      return res;
+    }
+    return;
+  }
+  return { handleLogIn, isLoading, error };
+}
+
+export function useRetrieveProfile() {
+  const { postData, isLoading, error } = usePost<void, UserProfileProps>(
+    "/user/profile"
+  );
+  const dispatch = useAppDispatch();
+  async function handleRetrieveProfile(): Promise<
+    UserProfileProps | undefined
+  > {
+    const res = await postData();
+    if (res) {
+      dispatch(setUserInfos(res));
+      return res;
+    }
+    return;
+  }
+
+  return { handleRetrieveProfile, isLoading, error };
+}
+
+export function useUpdateProfile() {
+  const { putData, isLoading, error } = usePut<UserUpdateDTO, UserProfileProps>(
+    "/user/profile"
+  );
+  const dispatch = useAppDispatch();
+  async function handleUpdateProfile(
+    payload: UserUpdateDTO
+  ): Promise<UserProfileProps | undefined> {
+    const res = await putData(payload);
+    if (res) {
+      dispatch(setUserInfos(res));
+      return res;
+    }
+    return res;
+  }
+  return { handleUpdateProfile, isLoading, error };
+}

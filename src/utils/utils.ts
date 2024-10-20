@@ -7,8 +7,10 @@ export const formatAltForIcon = (icon: string): string => {
   } icon`;
 };
 
-export const setLocalStorageAuthToken = (token: string): void =>
-  localStorage.setItem("authToken", JSON.stringify(token));
+export const setLocalStorageAuthToken = (token: string | null): void =>
+  token
+    ? localStorage.setItem("authToken", JSON.stringify(token))
+    : localStorage.removeItem("authToken");
 
 export function getLocalStorageAuthToken(): string | null {
   const token = localStorage.getItem("authToken");

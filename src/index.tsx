@@ -1,20 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./utils/style/sass/main.scss";
 import AppRouter from "./utils/router";
-import StoreProvider from "./utils/store";
+import { store } from "./utils/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <StoreProvider>
+    <Provider store={store}>
       <AppRouter />
-    </StoreProvider>
+    </Provider>
   </React.StrictMode>
 );
 

@@ -2,6 +2,18 @@
     color: #fff;
     margin-bottom: 2rem;
 
+    &__head {
+        &__skeleton {
+            margin: 0 auto;
+            justify-content: center;
+            width: 270px;
+            height: 56px;
+            display: flex;
+            padding: 8px;
+
+        }
+    }
+
     button {
         padding: 10px;
     }

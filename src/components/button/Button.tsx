@@ -27,7 +27,7 @@ export default function Button({
   );
 
   return (
-    <button className={buttonClassList} {...props}>
+    <button disabled={isLoading} className={buttonClassList} {...props}>
       <Loader />
       {label}
     </button>

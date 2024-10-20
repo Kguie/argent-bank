@@ -1,5 +1,5 @@
-import axios from "axios";
-
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { useEffect } from "react";
 import {
   selectAuthToken,
   selectUserInfos,
@@ -7,45 +7,63 @@ import {
   useAppSelector,
 } from "../selectors";
 import { logOut } from "../../../features/authToken";
-import { useNavigate } from "react-router-dom";
 import { resetUserInfos } from "../../../features/userInfos";
+import { useNavigate } from "react-router-dom";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/api/v1",
-});
+function useAxiosInstance(): AxiosInstance {
+  const token = useAppSelector(selectAuthToken);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUserInfos);
+  const navigate = useNavigate();
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = useAppSelector(selectAuthToken);
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3001/api/v1",
+  });
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    const dispatch = useAppDispatch();
-    const token = useAppSelector(selectAuthToken);
-    const user = useAppSelector(selectUserInfos);
-    const navigate = useNavigate();
+  useEffect(() => {
+    const requestInterceptor = axiosInstance.interceptors.request.use(
+      (config) => {
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
 
-    if (
-      error.response?.data?.message?.includes("Error in tokenValidation.js")
-    ) {
-      if (token) dispatch(logOut());
-      if (user) dispatch(resetUserInfos());
-      navigate("/login");
-    }
-    return Promise.reject(error);
-  }
-);
+    // Intercepteur pour gérer les erreurs de réponse
+    const responseInterceptor = axiosInstance.interceptors.response.use(
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => {
+        if (
+          error.message.includes("Error in tokenValidation.js") ||
+          error.status === 401
+        ) {
+          console.error(error);
+          if (token) dispatch(logOut());
+          if (user) dispatch(resetUserInfos());
+          navigate("/login");
+        }
+        return Promise.reject(error);
+      }
+    );
 
-export default axiosInstance;
+    return () => {
+      axiosInstance.interceptors.request.eject(requestInterceptor);
+      axiosInstance.interceptors.response.eject(responseInterceptor);
+    };
+  }, [
+    token,
+    dispatch,
+    user,
+    navigate,
+    axiosInstance.interceptors.request,
+    axiosInstance.interceptors.response,
+  ]);
+
+  return axiosInstance;
+}
+
+export default useAxiosInstance;
