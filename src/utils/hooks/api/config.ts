@@ -1,5 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   selectAuthToken,
   selectUserInfos,
@@ -8,7 +10,6 @@ import {
 } from "../selectors";
 import { logOut } from "../../../features/authToken";
 import { resetUserInfos } from "../../../features/userInfos";
-import { useNavigate } from "react-router-dom";
 
 function useAxiosInstance(): AxiosInstance {
   const token = useAppSelector(selectAuthToken);
@@ -33,7 +34,6 @@ function useAxiosInstance(): AxiosInstance {
       }
     );
 
-    // Intercepteur pour gérer les erreurs de réponse
     const responseInterceptor = axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
@@ -54,11 +54,10 @@ function useAxiosInstance(): AxiosInstance {
       axiosInstance.interceptors.request.eject(requestInterceptor);
       axiosInstance.interceptors.response.eject(responseInterceptor);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     token,
-    dispatch,
     user,
-    navigate,
     axiosInstance.interceptors.request,
     axiosInstance.interceptors.response,
   ]);

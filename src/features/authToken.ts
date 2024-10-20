@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getLocalStorageAuthToken } from "../utils/utils";
+import {
+  getLocalStorageAuthToken,
+  setLocalStorageAuthToken,
+} from "../utils/utils";
 
 export type AuthTokenState = {
   value: null | string;
@@ -17,6 +20,7 @@ export const authTokenSlice = createSlice({
       state.value = action.payload;
     },
     logOut: (state) => {
+      setLocalStorageAuthToken(null);
       state.value = null;
     },
   },

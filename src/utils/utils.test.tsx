@@ -16,7 +16,7 @@ describe("formatAltForIcon", () => {
     expect(result).toBe("Icon icon");
   });
 
-  test("handles empty string input gracefully", () => {
+  test("handles empty string input", () => {
     const result = formatAltForIcon("");
     expect(result).toBe("Undefined icon");
   });

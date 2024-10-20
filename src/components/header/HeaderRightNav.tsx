@@ -7,7 +7,6 @@ import {
 } from "../../utils/hooks/selectors";
 import { logOut } from "../../features/authToken";
 import { resetUserInfos } from "../../features/userInfos";
-import { setLocalStorageAuthToken } from "../../utils/utils";
 
 type HeaderRightNavItemProps = {
   label: string;
@@ -23,7 +22,6 @@ export default function HeaderRightNav(): React.ReactElement {
 
   function handleSignOut(): void {
     dispatch(logOut());
-    setLocalStorageAuthToken(null);
     dispatch(resetUserInfos());
     navigate("/");
   }

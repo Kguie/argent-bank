@@ -52,6 +52,7 @@ export function useLogIn() {
       password: payload.password,
       email: payload.email,
     });
+    f;
     if (res?.token) {
       dispatch(logIn(res.token));
       setLocalStorageAuthToken(payload.rememberMe ? res.token : null);

@@ -22,8 +22,7 @@ export default function SignInForm(): React.ReactElement {
     const password = formData.get("password") as string;
     const rememberMe = formData.get("remember-me") === "on";
 
-    const payload = { email, password, rememberMe };
-    const res = await handleLogIn(payload);
+    const res = await handleLogIn({ email, password, rememberMe });
 
     if (!res?.token) setIsLoading(false);
   }
