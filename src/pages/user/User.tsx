@@ -1,4 +1,4 @@
-import { memo, MemoExoticComponent, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import UserHeader from "../../components/user/userHeader/UserHeader";
@@ -10,20 +10,15 @@ export default function User(): React.ReactElement {
   const { id } = useParams();
   const userInfos = useAppSelector(selectUserInfos);
 
-  const AccountsArray: MemoExoticComponent<
-    () => React.ReactElement<any, any> | null
-  > = memo(() => (
-    <>
-      {MOCKED_ACCOUNTS.map(({ title, description, amount }) => (
-        <UserAccount
-          key={title}
-          title={title}
-          amount={amount}
-          description={description}
-        />
-      ))}
-    </>
-  ));
+  const AccountsArray = (): React.ReactNode =>
+    MOCKED_ACCOUNTS.map(({ title, description, amount }) => (
+      <UserAccount
+        key={title}
+        title={title}
+        amount={amount}
+        description={description}
+      />
+    ));
 
   useEffect(() => {
     if (id && userInfos && id !== userInfos.id)

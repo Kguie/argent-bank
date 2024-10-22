@@ -1,4 +1,4 @@
-import { FormEvent, memo, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../button/Button";
@@ -27,11 +27,10 @@ export default function SignInForm(): React.ReactElement {
     if (!res?.token) setIsLoading(false);
   }
 
-  const ErrorMessage = memo(() =>
+  const ErrorMessage = (): React.ReactElement | null =>
     error ? (
       <p className="sign-in-form__error">Connection attempt failed</p>
-    ) : null
-  );
+    ) : null;
 
   useEffect(() => {
     if (userInfos) {

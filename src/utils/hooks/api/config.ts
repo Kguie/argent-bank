@@ -55,12 +55,7 @@ function useAxiosInstance(): AxiosInstance {
       axiosInstance.interceptors.response.eject(responseInterceptor);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    token,
-    user,
-    axiosInstance.interceptors.request,
-    axiosInstance.interceptors.response,
-  ]);
+  }, [token, user]);
 
   return axiosInstance;
 }

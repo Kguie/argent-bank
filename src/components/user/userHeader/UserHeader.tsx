@@ -1,4 +1,4 @@
-import { memo, MemoExoticComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useRetrieveProfile } from "../../../utils/hooks/api/user";
 import Button from "../../button/Button";
@@ -15,21 +15,17 @@ export default function UserHeader(): React.ReactElement {
 
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const Head: MemoExoticComponent<() => React.ReactElement<any, any> | null> =
-    memo(() => (
-      <>
-        {isLoading && !userInfos ? (
-          <span className="user-header__head__skeleton">
-            <Skeleton />
-          </span>
-        ) : (
-          <UserHeaderEdit
-            onEdit={editMode}
-            setOnEdit={(state: boolean) => setEditMode(state)}
-          />
-        )}
-      </>
-    ));
+  const Head = (): React.ReactElement =>
+    isLoading && !userInfos ? (
+      <span className="user-header__head__skeleton">
+        <Skeleton />
+      </span>
+    ) : (
+      <UserHeaderEdit
+        onEdit={editMode}
+        setOnEdit={(state: boolean) => setEditMode(state)}
+      />
+    );
 
   useEffect(() => {
     handleRetrieveProfile();

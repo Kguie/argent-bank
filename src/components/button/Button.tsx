@@ -1,5 +1,3 @@
-import { memo, MemoExoticComponent, useMemo } from "react";
-
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
   isLoading?: boolean;
@@ -10,21 +8,15 @@ export default function Button({
   isLoading,
   ...props
 }: ButtonProps): React.ReactElement {
-  const Loader: MemoExoticComponent<() => React.ReactElement<any, any> | null> =
-    memo(() => (
-      <>
-        {isLoading ? (
-          <div>
-            <i className="fa-solid fa-spinner"></i>
-          </div>
-        ) : null}
-      </>
-    ));
+  const buttonClassList: string =
+    "button" + (isLoading ? " button--loading" : "");
 
-  const buttonClassList: string = useMemo(
-    () => "button" + (isLoading ? " button--loading" : ""),
-    [isLoading]
-  );
+  const Loader = (): React.ReactElement | null =>
+    isLoading ? (
+      <div>
+        <i className="fa-solid fa-spinner"></i>
+      </div>
+    ) : null;
 
   return (
     <button disabled={isLoading} className={buttonClassList} {...props}>

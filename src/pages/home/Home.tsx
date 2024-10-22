@@ -1,23 +1,16 @@
-import { memo, MemoExoticComponent } from "react";
-
 import HomeBanner from "../../components/home/homeBanner/HomeBanner";
 import FeatureItem from "../../components/home/featureItem/FeatureItem";
 
 export default function Home(): React.ReactElement {
-  const FeaturesRow: MemoExoticComponent<
-    () => React.ReactElement<any, any> | null
-  > = memo(() => (
-    <>
-      {FEATURES.map((item) => (
-        <FeatureItem
-          key={item.title}
-          icon={item.icon}
-          title={item.title}
-          content={item.content}
-        />
-      ))}
-    </>
-  ));
+  const FeaturesRow = (): React.ReactNode =>
+    FEATURES.map((item) => (
+      <FeatureItem
+        key={item.title}
+        icon={item.icon}
+        title={item.title}
+        content={item.content}
+      />
+    ));
 
   return (
     <main className="home">
