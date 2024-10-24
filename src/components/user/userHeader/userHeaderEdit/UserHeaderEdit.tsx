@@ -22,20 +22,20 @@ export default function UserHeaderEdit({ setOnEdit }: UserHeaderEditProps) {
     event.preventDefault();
     setIsLoading(true);
     const formData = new FormData(event.currentTarget);
-    let firstName = formData.get("firstName") as string;
-    let lastName = formData.get("lastName") as string;
+    let firstName = (formData.get("firstName") as string).trim();
+    let lastName = (formData.get("lastName") as string).trim();
 
-    if (!firstName.trim().length && userInfos) {
+    if (!firstName.length && userInfos) {
       firstName = userInfos.firstName;
     }
 
-    if (!lastName.trim().length && userInfos) {
+    if (!lastName.length && userInfos) {
       lastName = userInfos.lastName;
     }
 
     if (
-      firstName.trim() === userInfos?.firstName &&
-      lastName.trim() === userInfos?.lastName
+      firstName === userInfos?.firstName &&
+      lastName === userInfos?.lastName
     ) {
       setIsLoading(false);
       setOnEdit(false);

@@ -26,11 +26,19 @@
         justify-content: center;
         gap: 16px;
 
-        button {
+        .button {
             width: 150px;
             background-color: #fff;
             color: $clr-primary;
             border-width: 2px;
+
+            &--loading {
+                color: transparent;
+            }
+
+            .fa-spinner {
+                color: $clr-primary;
+            }
         }
     }
 }
