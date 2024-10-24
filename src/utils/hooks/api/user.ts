@@ -94,7 +94,7 @@ export function useUpdateProfile() {
       dispatch(setUserInfos(res));
       return res;
     }
-    return res;
+    return;
   }
   return { handleUpdateProfile, isLoading, error };
 }
