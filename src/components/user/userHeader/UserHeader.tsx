@@ -21,16 +21,23 @@ export default function UserHeader(): React.ReactElement {
         <Skeleton />
       </span>
     ) : (
-      <UserHeaderEdit
-        onEdit={editMode}
-        setOnEdit={(state: boolean) => setEditMode(state)}
-      />
+      <h2>
+        Welcome back
+        <br />
+        {`${userInfos?.firstName} ${userInfos?.lastName}`}
+      </h2>
     );
 
   useEffect(() => {
     handleRetrieveProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (editMode) {
+    return (
+      <UserHeaderEdit setOnEdit={(state: boolean) => setEditMode(state)} />
+    );
+  }
 
   return (
     <div className="user-header">

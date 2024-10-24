@@ -37,20 +37,38 @@ export default function SignInForm(): React.ReactElement {
       navigate("/profile/" + userInfos.id);
       setIsLoading(false);
     }
-  }, [navigate, userInfos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfos]);
 
   return (
     <form className="sign-in-form" onSubmit={handleSubmit}>
       <div className="sign-in-form__input-wrapper">
         <label htmlFor="username">Username</label>
-        <input required type="text" id="username" name="username" />
+        <input
+          disabled={isLoading}
+          required
+          type="text"
+          id="username"
+          name="username"
+        />
       </div>
       <div className="sign-in-form__input-wrapper">
         <label htmlFor="password">Password</label>
-        <input required type="password" id="password" name="password" />
+        <input
+          disabled={isLoading}
+          required
+          type="password"
+          id="password"
+          name="password"
+        />
       </div>
       <div className="sign-in-form__input-remember">
-        <input type="checkbox" id="remember-me" name="remember-me" />
+        <input
+          disabled={isLoading}
+          type="checkbox"
+          id="remember-me"
+          name="remember-me"
+        />
         <label htmlFor="remember-me">Remember me</label>
       </div>
       <Button isLoading={isLoading} label="Sign in" type="submit" />

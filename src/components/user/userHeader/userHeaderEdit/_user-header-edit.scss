@@ -1,0 +1,36 @@
+.user-header-edit {
+    h2 {
+        margin-bottom: 0;
+        color: #fff
+    }
+
+    &__inputs-wrapper {
+        margin-top: 8px;
+        margin-bottom: 26.56px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        border-width: 2px;
+        border-color: $clr-tertiary;
+
+        input {
+            width: 200px;
+            font-size: 18px;
+            padding: 4px;
+        }
+    }
+
+    &__buttons-wrapper {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+
+        button {
+            width: 150px;
+            background-color: #fff;
+            color: $clr-primary;
+            border-width: 2px;
+        }
+    }
+}

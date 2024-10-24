@@ -2,15 +2,18 @@ import HomeBanner from "../../components/home/homeBanner/HomeBanner";
 import FeatureItem from "../../components/home/featureItem/FeatureItem";
 
 export default function Home(): React.ReactElement {
-  const FeaturesRow = (): React.ReactNode =>
-    FEATURES.map((item) => (
-      <FeatureItem
-        key={item.title}
-        icon={item.icon}
-        title={item.title}
-        content={item.content}
-      />
-    ));
+  const FeaturesRow = (): React.ReactElement => (
+    <>
+      {FEATURES.map((item) => (
+        <FeatureItem
+          key={item.title}
+          icon={item.icon}
+          title={item.title}
+          content={item.content}
+        />
+      ))}
+    </>
+  );
 
   return (
     <main className="home">
