@@ -41,7 +41,10 @@ export default function SignInForm(): React.ReactElement {
   }, [userInfos]);
 
   return (
-    <form className="sign-in-form" onSubmit={handleSubmit}>
+    <form
+      data-testid="sign-in-form"
+      className="sign-in-form"
+      onSubmit={handleSubmit}>
       <div className="sign-in-form__input-wrapper">
         <label htmlFor="username">Username</label>
         <input

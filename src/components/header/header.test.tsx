@@ -1,73 +1,95 @@
-import { screen, fireEvent, within } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 import { useNavigate } from "react-router-dom";
 
-import { render } from "../../utils/test";
 import HeaderRightNav from "./HeaderRightNav";
-
-// Mock pour le hook useNavigate
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/selectors";
+import { logOut } from "../../features/authToken";
+import { resetUserInfos } from "../../features/userInfos";
 jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
   useNavigate: jest.fn(),
 }));
 
+jest.mock("../../utils/hooks/selectors", () => ({
+  useAppDispatch: jest.fn(),
+  useAppSelector: jest.fn(),
+}));
+
+jest.mock("../../features/authToken", () => ({
+  logOut: jest.fn(),
+}));
+
+jest.mock("../../features/userInfos", () => ({
+  resetUserInfos: jest.fn(),
+}));
+
+const mockStore = configureStore([]);
+
 describe("HeaderRightNav Component", () => {
-  const mockNavigate = jest.fn();
+  let store: any;
+  let navigateMock: jest.Mock;
+  let dispatchMock: jest.Mock;
 
   beforeEach(() => {
-    // Réinitialiser les mocks avant chaque test
-    mockNavigate.mockClear();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    store = mockStore({});
+    navigateMock = jest.fn();
+    dispatchMock = jest.fn();
+
+    (useNavigate as jest.Mock).mockReturnValue(navigateMock);
+    (useAppDispatch as unknown as jest.Mock).mockReturnValue(dispatchMock);
   });
 
-  test("renders Sign In link when pathname is not /user", () => {
-    render(<HeaderRightNav />, ["/"]);
-
-    const headerRightButtons = screen.getAllByTestId("header-right-nav-item");
-
-    expect(headerRightButtons.length).toEqual(1);
-    expect(
-      within(headerRightButtons[0]).getByText("Sign In")
-    ).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[0]).getByTestId("header-right-nav-item__icon")
-    ).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[0]).getByTestId("header-right-nav-item__icon")
-    ).toHaveClass("fa-user-circle");
-
-    fireEvent.click(screen.getByText("Sign In"));
-    expect(mockNavigate).toHaveBeenCalledWith("/sign-in");
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("renders user-specific navigation when pathname includes /user", () => {
-    render(<HeaderRightNav />, ["/user"]);
+  test("renders Sign In when userInfos is null", () => {
+    (useAppSelector as unknown as jest.Mock).mockReturnValue(null);
 
-    const headerRightButtons = screen.getAllByTestId("header-right-nav-item");
+    render(
+      <Provider store={store}>
+        <HeaderRightNav />
+      </Provider>
+    );
 
-    expect(headerRightButtons.length).toEqual(2);
+    const signInButton = screen.getByText(/Sign In/i);
+    expect(signInButton).toBeInTheDocument();
 
-    expect(within(headerRightButtons[0]).getByText("Tony")).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[0]).getByTestId("header-right-nav-item__icon")
-    ).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[0]).getByTestId("header-right-nav-item__icon")
-    ).toHaveClass("fa-user-circle");
+    fireEvent.click(signInButton);
+    expect(navigateMock).toHaveBeenCalledWith("/login");
+  });
 
-    expect(
-      within(headerRightButtons[1]).getByText("Sign Out")
-    ).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[1]).getByTestId("header-right-nav-item__icon")
-    ).toBeInTheDocument();
-    expect(
-      within(headerRightButtons[1]).getByTestId("header-right-nav-item__icon")
-    ).toHaveClass("fa-sign-out");
+  test("renders user firstName and Sign Out when userInfos is available", () => {
+    (useAppSelector as unknown as jest.Mock).mockReturnValue({
+      id: "123",
+      firstName: "John",
+      lastName: "Doe",
+    });
 
-    fireEvent.click(screen.getByText("Tony"));
-    expect(mockNavigate).toHaveBeenCalledWith("/user");
+    render(
+      <Provider store={store}>
+        <HeaderRightNav />
+      </Provider>
+    );
 
-    fireEvent.click(screen.getByText("Sign Out"));
-    expect(mockNavigate).toHaveBeenCalledWith("/");
+    // Vérifier que le prénom de l'utilisateur est affiché
+    const userFirstNameButton = screen.getByText("John");
+    expect(userFirstNameButton).toBeInTheDocument();
+
+    // Vérifier que le bouton Sign Out est affiché
+    const signOutButton = screen.getByText(/Sign Out/i);
+    expect(signOutButton).toBeInTheDocument();
+
+    // Vérifier la redirection vers le profil lors du clic sur le prénom
+    fireEvent.click(userFirstNameButton);
+    expect(navigateMock).toHaveBeenCalledWith("/profile/123");
+
+    // Vérifier le dispatch des actions lors du clic sur Sign Out
+    fireEvent.click(signOutButton);
+    expect(dispatchMock).toHaveBeenCalledWith(logOut());
+    expect(dispatchMock).toHaveBeenCalledWith(resetUserInfos());
+    expect(navigateMock).toHaveBeenCalledWith("/");
   });
 });

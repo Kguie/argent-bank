@@ -13,7 +13,7 @@ export default function Button({
 
   const Loader = (): React.ReactElement | null =>
     isLoading ? (
-      <div>
+      <div data-testid="button-spinner">
         <i className="fa-solid fa-spinner"></i>
       </div>
     ) : null;

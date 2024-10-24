@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+# Argent Bank #
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ Ce projet correspond au projet 13 de la formation développeur d'applications JS React de OPENCLASSROOMS.
 
-## Available Scripts
 
-In the project directory, you can run:
+ ## Table des Matières
 
-### `npm start`
+- [Introduction](#introduction)
+- [Installation et utilisation](#installation-et-utilisation)
+- [Documentation](#documentation)
+- [Auteurs](#auteurs)
+- [Outils et contraintes techniques](#outils-et-contraintes-techniques) 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Introduction
 
-### `npm test`
+- L'objectif ici est de créer une application web React pour le nouveau système d'authentification des utilisateurs.Le backend est déjà disponible(https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API), ainsi que les fichiers HTML et CSS pour les différentes pages.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Installation et utilisation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Installation des dépendances : Cloner ce repository et lancer `yarn install` pour installer les dépendances puis démarrer avec `yarn start`.
+- `yarn build` construit l'application pour la production dans le dossier `build`.\
+- `yarn eject` supprimera la dépendance de build unique de votre projet. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Structure du Projet
 
-### `npm run eject`
+- src/
+- ├── assets/              # Ressources statiques telles que les images et icônes
+- │   ├── icons/           # Icônes SVG réutilisables dans les composants
+- │   └── ...              # Autres ressources comme les polices, logos, etc.
+- │
+- ├── features/            # Reducers
+- │
+- ├── components/          # Composants réutilisables à travers l'application
+- │
+- ├── pages/               # Pages principales de l'application (correspond à chaque route)   
+- │
+- ├── utils/               # Fonctions utilitaires et helpers
+- │   ├── hooks/           # Hooks personnalisés pour gérer l'état ou les effets, selectors du store
+- │   ├── skeleton/        # Squelettes de chargement ou placeholders
+- │   ├── test/            # Configuration du wrapper de test
+- │   ├── style/           # Configuration du style
+- │   └── store.tsx        # Configuration du store
+- │
+- └── index.tsx            # Point d'entrée de l'application React
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Auteurs
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [GUIEBA Kévin](https://github.com/Kguie/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Outils et contraintes techniques ###
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Créer l’application web complète et responsive avec React.
+- Utiliser Redux pour gérer le state de l'ensemble de l'application.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Ce que doit faire l’application:
+    - L'utilisateur peut visiter la page d'accueil
+    - L'utilisateur peut se connecter au système
+    - L'utilisateur peut se déconnecter du système
+    - L'utilisateur ne peut voir les informations relatives à son propre profil qu'après s'être connecté avec succès
+    - L'utilisateur peut modifier le profil et conserver les données dans la base de données. 
+
