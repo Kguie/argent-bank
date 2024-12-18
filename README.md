@@ -7,7 +7,6 @@
 
 - [Introduction](#introduction)
 - [Installation et utilisation](#installation-et-utilisation)
-- [Documentation](#documentation)
 - [Auteurs](#auteurs)
 - [Outils et contraintes techniques](#outils-et-contraintes-techniques) 
 
