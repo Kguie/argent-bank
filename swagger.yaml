@@ -133,38 +133,12 @@ paths:
           description: Transactions retrieved Successfully
           schema:
             $ref: '#/definitions/AllTransactionsApiResponse'
+        '401':
+          description: Authentication token is missing or invalid
+        '403':
+          description: You do not have permission to access this resource  
         '500':
-          description: Internal Server Error       
-    post:    
-      security:
-        - Bearer: []
-      tags:
-        - Transactions Module
-      summary: New transaction
-      description: Create a transaction.
-      parameters:
-        - in: header
-          name: Authorization
-          type: string
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Transaction payload
-          required: true
-          schema:
-            $ref: '#/definitions/Transaction'  
-      produces:
-        - application/json
-      responses:
-        '201':
-          description: Transaction created Successfully
-          schema:
-            $ref: '#/definitions/TransactionResponse'
-        '400':
-          description: Missing fields     
-        '500':
-          description: Internal Server Error  
+          description: Internal Server Error
   /user/transactions/{id}:
     get:
       security:
@@ -191,11 +165,15 @@ paths:
           description: Transaction retrieved Successfully
           schema:
             $ref: '#/definitions/TransactionResponse'
+        '401':
+          description: Authentication token is missing or invalid
+        '403':
+          description: You do not have permission to access this resource       
         '404':
           description: Transaction not found    
         '500':
           description: Internal Server Error   
-    put:
+    patch:
       security:
         - Bearer: []
       tags:
@@ -218,7 +196,7 @@ paths:
           description: Transaction update payload
           required: true
           schema:
-            $ref: '#/definitions/Transaction'  
+            $ref: '#/definitions/TransactionUpdate'  
       produces:
         - application/json
       responses:
@@ -227,38 +205,15 @@ paths:
           schema:
             $ref: '#/definitions/TransactionResponse'
         '400':
-          description: Missing fields    
+          description: Missing fields
+        '401':
+          description: Authentication token is missing or invalid
+        '403':
+          description: You do not have permission to access this resource         
         '404':
           description: Transaction not found    
         '500':
-          description: Internal Server Error 
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - Transactions Module
-      summary: Transaction
-      description: Delete a specific transaction using its ID.
-      parameters:
-        - in: header
-          name: Authorization
-          type: string
-          description: Attach Bearer JWT token
-          required: true
-        - in: path
-          type: string
-          name: id
-          description: Transaction id.
-          required: true  
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transactions deleted Successfully         
-        '404':
-          description: Transaction not found    
-        '500':
-          description: Internal Server Error     
+          description: Internal Server Error    
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -360,5 +315,11 @@ definitions:
         type: string
       lastName:
         type: string
-  
-
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        enum: [food,subscriptions,ententairment,transportation,saving,utilities,health,other]
+      notes:
+        type: string     
